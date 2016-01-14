@@ -48,10 +48,12 @@ app.get('/', function(req, res) {
 
 app.get('/random', function(req, res) {
   var type = req.query.type && req.query.type >= 1 && req.query.type <= 2 ? parseInt(req.query.type) : 2;
-  connection.query('SELECT * FROM type? ORDER BY rand() LIMIT 1', [type], function(err, rows, fields) {
+  // i was having problems with ORDER BY rand() so I switched to this solution, which is much faster
+  // from http://stackoverflow.com/a/4329447
+  connection.query('SELECT * FROM type? AS r1 JOIN (SELECT CEIL(RAND() * (SELECT MAX(id) FROM type?)) AS id) AS r2 WHERE r1.id >= r2.id ORDER BY r1.id ASC LIMIT 1', [type, type], function(err, rows, fields) {
     if (err) throw err;
-
-    res.redirect('/joke/' + rows[0].id + '?type=' + type)
+    
+    res.redirect('/joke/' + rows[0].id + '?type=' + type);
   });
 })
 
