@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+  <head>
+    <title>hahaha | Joke</title>
+    <% include head.ejs %>
+  </head>
+  <body>
+    <div class="row">
+      <div class="large-8 columns">
+        <h1>hahaha <small>Joke Type <%= type %></small></h1>
+        <article class="joke">
+          <div class="small-2 columns joke-rating">
+           <p class="joke-rating-value" id="rating-<%= joke.id %>"><%= joke.rating %></p>
+          </div>
+
+          <div class="joke-text">
+           <h4 class="joke-text-heading">
+             <% switch (joke.type) {
+             case 1:
+               %>I like my <%= joke.word1 %> like I like my <%= joke.word2 %>: <%= joke.word3 %>.<%
+               break;
+             case 2:
+               %>What do you call a <%= joke.word1 %> <%= joke.word2 %>? A <%= joke.word3 %> <%= joke.word4 %>.<%
+               break;
+             default:
+               %>Error: Invalid type.<%
+             } %>
+            </h4>
+            <p class="joke-desc-detail">Joke ID: <%= joke.id %></p>
+            <a class="button joke-rating-button success joke-rating-button-<%= joke.id %><% if ((cookies['voted' + type] || '').split(',').indexOf(joke.id.toString()) != -1) { %> disabled<% } %>" onclick="vote(<%= type %>, <%= joke.id %>, 'up')">That's funny!</a>
+            <a class="button joke-rating-button alert joke-rating-button-<%= joke.id %><% if ((cookies['voted' + type] || '').split(',').indexOf(joke.id.toString()) != -1) { %> disabled<% } %>" onclick="vote(<%= type %>, <%= joke.id %>, 'down')">Not funny.</a>
+          </div>
+
+         </article>
+        
+      </div>
+      <div class="large-4 columns">
+        <% include menu.ejs %>
+        
+      </div>
+    </div>
+    <% include footer.ejs %>
+  </body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+  <head>
+    <title>hahaha | Home</title>
+    <% include head.ejs %>
+  </head>
+  <body>
+    <div class="row">
+      <div class="large-8 columns">
+        <h1>hahaha <small>Joke Type <%= type %></small></h1>
+        <% for (var joke = 0; joke < jokes.length; joke++) { %>
+         <article class="joke">
+
+           <div class="small-2 joke-rating">
+            <p class="joke-rating-value"><a href="/joke/<%= jokes[joke].id %>?type=<%= type %>" id="rating-<%= jokes[joke].id %>"><%= jokes[joke].rating %></a></p>
+           </div>
+
+           <div class="small-10 joke-text">
+             <h4 class="joke-text-heading">
+               <% switch (jokes[joke].type) {
+               case 1:
+                 %>I like my <%= jokes[joke].word1 %> like I like my <%= jokes[joke].word2 %>: <%= jokes[joke].word3 %>.<%
+                 break;
+               case 2:
+                 %>What do you call a <%= jokes[joke].word1 %> <%= jokes[joke].word2 %>? A <%= jokes[joke].word3 %> <%= jokes[joke].word4 %>.<%
+                 break;
+               default:
+                 %>Error: Invalid type.<%
+               } %>
+              </h4>
+              <a class="button joke-rating-button success joke-rating-button-<%= jokes[joke].id %><% if ((cookies['voted' + type] || '').split(',').indexOf(jokes[joke].id.toString()) != -1) { %> disabled<% } %>" onclick="vote(<%= type %>, <%= jokes[joke].id %>, 'up')">That's funny!</a>
+              <a class="button joke-rating-button alert joke-rating-button-<%= jokes[joke].id %><% if ((cookies['voted' + type] || '').split(',').indexOf(jokes[joke].id.toString()) != -1) { %> disabled<% } %>" onclick="vote(<%= type %>, <%= jokes[joke].id %>, 'down')">Not funny.</a>
+           </div>
+
+         </article>
+
+         <hr>
+        <% } %>
+        
+        <div class="column row">
+          <ul class="pagination" role="navigation" aria-label="Pagination">
+            <% if(page == 1){%>
+              <li class="disabled">« <span class="show-for-sr">Previous page</span></li>
+            <% } else { %>
+              <li><a href="/?page=<%= page - 1 %>&type=<%= type %>" aria-label="Previous page">« <span class="show-for-sr">Previous page</span></a></li>
+            <% } %>
+            <% for (var i = 1; i <= frontPagePages; i++) { %>
+              <% if(i === page){%>
+                <li class="current"><span class="show-for-sr">You're on page</span> <%= i %></li>
+              <% } else { %>
+                <li><a href="/?page=<%= i %>&type=<%= type %>" aria-label="Page <%= i %>"><%= i %></a></li>
+              <% } %>
+            <% } %>
+            <% if(page == frontPagePages){%>
+              <li class="disabled">» <span class="show-for-sr">Next page</span></li>
+            <% } else { %>
+              <li><a href="/?page=<%= page + 1 %>&type=<%= type %>" aria-label="Next page">» <span class="show-for-sr">Next page</span></a></li>
+            <% } %>
+          </ul>
+          <small>These 5 pages are only a small selection of the available jokes. Use the Random Joke button to find more.</small>
+        </div>
+        
+      </div>
+      <div class="large-4 columns">
+        <% include menu.ejs %>
+    </div>
+    <% include footer.ejs %>
+  </body>
+</html>

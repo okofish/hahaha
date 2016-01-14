@@ -1,0 +1,21 @@
+{
+  "author": "Jesse Friedman",
+  "dependencies": {
+    "body-parser": "^1.14.1",
+    "cookie-parser": "^1.4.0",
+    "ejs": "^2.3.4",
+    "express": "^4.13.3",
+    "mysql": "^2.9.0"
+  },
+  "description": "Viewer for hahaha joke generator jokes",
+  "engines": {
+    "node": "0.12.2"
+  },
+  "license": "ISC",
+  "main": "index.js",
+  "name": "hahaha",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "1.0.0"
+}

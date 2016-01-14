@@ -1,0 +1,13 @@
+        <div class="row">
+          <ul class="expanded button-group dropdown menu typeselect-menu" data-dropdown-menu>
+            <li class="button">
+              <a href="/?type=<%= type %>" class="typeselect-button">Joke Type <%= type %></a>
+              <ul class="menu">
+                <% for (var i = 1; i <= 2; i++) { %>
+                <li><a href="/?type=<%= i %>">Joke Type <%= i %></a></li>
+                <% } %>
+              </ul>
+            </li>
+            <li class="button"><a class="typeselect-button" href="/random?type=<%= type %>">Random Joke</a></li>
+          </ul>
+        </div>
